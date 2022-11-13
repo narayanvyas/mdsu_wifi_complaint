@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wifi_complaint/app/controllers/global_controller.dart';
+import 'package:wifi_complaint/app/modules/complaint/controllers/complaint_controller.dart';
 import 'package:wifi_complaint/app/modules/home/views/home_view.dart';
 
 import 'app/global.dart';
@@ -17,6 +18,7 @@ void main() async {
   await Firebase.initializeApp();
   await GetStorage.init();
   Get.put(GlobalController());
+  Get.put(ComplaintController());
   runApp(
     const MyApp(),
   );

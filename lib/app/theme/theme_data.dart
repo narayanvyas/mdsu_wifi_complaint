@@ -15,7 +15,7 @@ ThemeData lightThemeStyle = ThemeData(
         bodyText2: bodyStyle),
     textButtonTheme: buttonStyleOne,
     appBarTheme: AppBarTheme(
-        iconTheme: IconThemeData(color: AppColors.blackColor),
+        iconTheme: IconThemeData(color: AppColors.whiteColor),
         backgroundColor: AppColors.blackColor),
     inputDecorationTheme: outlineInputTextFormFieldStyle,
     canvasColor: AppColors.whiteColor);

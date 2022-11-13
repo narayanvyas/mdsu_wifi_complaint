@@ -11,12 +11,12 @@ final databaseReference = FirebaseFirestore.instance;
 
 class Database {
   /// Create new user to Firebase Authentication and storage data to the database
-  Future<void> createComplaint(
-      String name, String email, String complaint, dynamic complaintJson,
+  Future<void> createComplaint(String id, String name, String email,
+      String complaint, dynamic complaintJson,
       {String? department}) async {
     try {
       final ComplaintModel complaintModel = ComplaintModel.fromJson({
-        'id': getTimeStamp(),
+        'id': id,
         'name': name,
         'email': email,
         'complaint': complaint,
@@ -28,7 +28,6 @@ class Database {
           .collection("mail")
           .doc(complaintModel.id)
           .set(complaintModel.toJson());
-      showSnackbar('Complaint Created Successfully', Status.success);
     } catch (e) {
       debugPrint(e.toString());
       showSnackbar('Error Creating Complaint', Status.failed);

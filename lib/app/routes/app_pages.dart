@@ -20,7 +20,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.COMPLAINT,
-      page: () => ComplaintView(
+      page: () => const ComplaintView(
         isDepartmentalComplaint: false,
       ),
       binding: ComplaintBinding(),
