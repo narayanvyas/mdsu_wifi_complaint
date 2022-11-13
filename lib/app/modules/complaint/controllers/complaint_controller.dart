@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random_string/random_string.dart';
 import 'package:wifi_complaint/app/global.dart';
 import 'package:wifi_complaint/services/database.dart';
 
@@ -57,7 +58,7 @@ class ComplaintController extends GetxController {
 
   Future<void> submitComplaint() async {
     if (validateComplaintInput()) {
-      currentComplaintId.value = 'MDS${getTimeStamp().substring(0, 9)}';
+      currentComplaintId.value = 'MDS${randomNumeric(10)}';
       await Database().createComplaint(
           currentComplaintId.value,
           nameController.text,

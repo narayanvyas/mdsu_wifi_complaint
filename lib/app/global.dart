@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 
-import 'controllers/global_controller.dart';
 import 'theme/app_colors.dart';
 
 enum HelpType {
@@ -72,6 +70,3 @@ String processDropdownData(String data, String dropdownPrefix) {
 }
 
 String processDropdownId(String data) => data.toString().split('.').first;
-
-bool isDarkMode() =>
-    Get.find<GlobalController>().box.read('isDarkMode') ?? false;

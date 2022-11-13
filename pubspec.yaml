@@ -10,10 +10,10 @@ dependencies:
   fluttertoast: 8.1.1
   url_launcher: 6.1.6
   flutter_screenutil: 5.6.0
-  get_storage: 2.0.3
   cloud_firestore: 4.0.5
   firebase_core: 2.2.0
-  flutter:
+  random_string: 2.3.1
+  flutter: 
     sdk: flutter
 
 dev_dependencies: 
@@ -21,9 +21,9 @@ dev_dependencies:
   flutter_test: 
     sdk: flutter
 
-flutter:
-  uses-material-design: true
+flutter: 
   assets: 
     - assets/
     - assets/images/
+  uses-material-design: true
 

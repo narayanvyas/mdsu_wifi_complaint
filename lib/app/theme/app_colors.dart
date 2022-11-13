@@ -20,16 +20,14 @@ Color? getColorFromHex(String? hexColor, Color? defaultColor) {
 class AppColors {
   AppColors();
   // Global Colors
-  static Color? primaryColor = isDarkMode() ? Colors.white : Color(0xFF2C2C2C);
-  static Color? primaryBgColor =
-      isDarkMode() ? Color(0xFF2C2C2C) : Colors.white;
+  static Color? primaryColor = Color(0xFF2C2C2C);
+  static Color? primaryBgColor = Colors.white;
   static Color? accentColor = const Color(0xFF1D1D1D);
   static Color? greyColor = const Color(0xFF9F9F9F);
   static Color? darkBgTextColor = Colors.black;
   static Color? circularProgressIndicatorColor = AppColors.primaryColor;
   static Color? circularProgressIndicatorDarkColor = const Color(0xFFFFFFFF);
-  static Color? circularProgressIndicatorInButtonColor =
-      isDarkMode() ? Colors.white : Colors.black;
+  static Color? circularProgressIndicatorInButtonColor = Colors.black;
   static Color? blackColor = Colors.black;
   static Color? blackTwoColor = Colors.black;
   static Color? whiteColor = Colors.white;

@@ -7,7 +7,6 @@ import 'package:wifi_complaint/app/modules/complaint/views/troubleshooting_view.
 import 'package:wifi_complaint/app/theme/app_colors.dart';
 import 'package:wifi_complaint/app/theme/ui_helpers.dart';
 
-import '../../../global.dart';
 import '../../../theme/form_field_styles.dart';
 import '../controllers/complaint_controller.dart';
 
@@ -42,25 +41,19 @@ class ComplaintView extends GetView<ComplaintController> {
                           child: DropdownButtonFormField<String>(
                             decoration: customTextFormFieldDecoration.copyWith(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: isDarkMode()
-                                        ? AppColors.whiteColor!
-                                        : AppColors.blackColor!),
+                                borderSide:
+                                    BorderSide(color: AppColors.blackColor!),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: isDarkMode()
-                                        ? AppColors.whiteColor!
-                                        : AppColors.blackColor!),
+                                borderSide:
+                                    BorderSide(color: AppColors.blackColor!),
                               ),
                             ),
                             value: controller.selectedDepartment.value,
                             onChanged: (String? value) {
                               controller.updateDropdown(value ?? '');
                             },
-                            dropdownColor: isDarkMode()
-                                ? AppColors.blackColor
-                                : AppColors.whiteColor,
+                            dropdownColor: AppColors.whiteColor,
                             items:
                                 controller.departmentList.map((String value) {
                               return DropdownMenuItem<String>(
