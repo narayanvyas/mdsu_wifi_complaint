@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "609805518935",
+    "project_id": "wifi-complaint",
+    "storage_bucket": "wifi-complaint.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609805518935:android:d1526c490ab62f971c3b12",
+        "android_client_info": {
+          "package_name": "com.mdsu.wifi_complaint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609805518935-2b0shp48k6juhpakmas2qe3sa3phflnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf9Ob2scsfxEghA3vdTMipk3AxKcD8NHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609805518935-2b0shp48k6juhpakmas2qe3sa3phflnf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "609805518935-hvi5s5c5kutaa0vcq46det0qbac5bh47.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mdsu.wifiComplaint"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
