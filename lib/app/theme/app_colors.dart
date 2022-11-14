@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '/app/global.dart';
-
 Color? getColorFromHex(String? hexColor, Color? defaultColor) {
   String? currentHexColor =
       hexColor == null ? '' : hexColor.replaceAll('#', '');
@@ -20,7 +18,7 @@ Color? getColorFromHex(String? hexColor, Color? defaultColor) {
 class AppColors {
   AppColors();
   // Global Colors
-  static Color? primaryColor = Color(0xFF2C2C2C);
+  static Color? primaryColor = const Color(0xFF2C2C2C);
   static Color? primaryBgColor = Colors.white;
   static Color? accentColor = const Color(0xFF1D1D1D);
   static Color? greyColor = const Color(0xFF9F9F9F);

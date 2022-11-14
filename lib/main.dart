@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:wifi_complaint/app/modules/complaint/controllers/complaint_controller.dart';
-import 'package:wifi_complaint/app/modules/home/views/home_view.dart';
+import '/app/controllers/global_controller.dart';
+import '/app/modules/auth/controllers/auth_controller.dart';
+import '/app/modules/complaint/controllers/complaint_controller.dart';
+import '/app/modules/home/views/home_view.dart';
 
 import 'app/routes/app_pages.dart';
 import 'app/theme/theme_data.dart';
@@ -14,6 +16,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Get.put(ComplaintController());
+  Get.put(GlobalController());
+  Get.put(AuthController());
+
   runApp(
     const MyApp(),
   );

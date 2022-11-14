@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:wifi_complaint/app/modules/complaint/controllers/complaint_controller.dart';
-import 'package:wifi_complaint/app/theme/app_colors.dart';
-import 'package:wifi_complaint/app/theme/button_styles.dart';
-import 'package:wifi_complaint/app/theme/ui_helpers.dart';
+import '/app/modules/complaint/controllers/complaint_controller.dart';
+import '/app/theme/app_colors.dart';
+import '/app/theme/button_styles.dart';
+import '/app/theme/ui_helpers.dart';
 
 class TroubleshootingView extends GetView<ComplaintController> {
   const TroubleshootingView({Key? key}) : super(key: key);

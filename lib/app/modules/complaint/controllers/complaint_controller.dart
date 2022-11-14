@@ -1,44 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:random_string/random_string.dart';
-import 'package:wifi_complaint/app/global.dart';
-import 'package:wifi_complaint/services/database.dart';
+import '/app/global.dart';
+import '/services/database.dart';
+
+import '../../../../models/complaint_model.dart';
 
 class ComplaintController extends GetxController {
+  RxList<ComplaintModel> complaints = <ComplaintModel>[].obs;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController complaintController = TextEditingController();
   RxInt currentTroubleshootingIndex = 0.obs;
   RxString currentComplaintId = ''.obs;
-  RxString selectedDepartment = 'Department of Computer Science'.obs;
-  List<String> departmentList = [
-    'Department of Fine Arts',
-    'Bharat Vidya Adhyan Sankul',
-    'Department of Commerce',
-    'Department of Management Studies',
-    'Department of Environmental Science',
-    'Department of Education',
-    'Department of Library & Education Sciences',
-    'Department of Computer Science',
-    'Department of Law',
-    'Department of Botany',
-    'Department of Food Science & Nutrition',
-    'Department of Rajasthan Studies',
-    'Kaptan Durga Prasad Choudhary Deptt. for Journalism, Mass Communication & Multi-media technique',
-    'Department of Microbiology',
-    'Department of Zoology',
-    'Department of Mathematics',
-    'Department of Pure & Applied Chemistry',
-    'Department of Hindi',
-    'Department of Geography',
-    'Department of Economics',
-    'Department of History',
-    'Department of Political Science',
-    'Department of Population Studies',
-    'Department of Geoinformatics & Remote Sensing',
-    'Department of Vedic Vangmaya',
-    'Department of Yogic Sciences & Human Consciousness'
-  ];
+  Map<String, num> currentLocation = {'longitude': 0.0, 'latitude': 0.0};
+  RxString selectedDepartment = 'Computer Science'.obs;
 
   bool validateComplaintInput() {
     if (nameController.text.length < 2) {
@@ -59,12 +36,14 @@ class ComplaintController extends GetxController {
   Future<void> submitComplaint() async {
     if (validateComplaintInput()) {
       currentComplaintId.value = 'MDS${randomNumeric(10)}';
+      currentLocation = await getLocation();
       await Database().createComplaint(
           currentComplaintId.value,
           nameController.text,
           emailController.text,
           complaintController.text,
           getComplaintEmail(),
+          currentLocation,
           department: selectedDepartment.value);
       currentTroubleshootingIndex.value = 3;
       nameController.text = '';
@@ -72,6 +51,77 @@ class ComplaintController extends GetxController {
       complaintController.text = '';
     }
   }
+
+  Future<Map<String, num>> getLocation() async {
+    try {
+      bool serviceEnabled;
+      LocationPermission permission;
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+      if (!serviceEnabled) {
+        showSnackbar('Location services are disabled', Status.failed);
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          showSnackbar('Location permissions are denied', Status.failed);
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        showSnackbar(
+            'Location permissions are permanently denied, we cannot request permissions.',
+            Status.failed);
+      }
+
+      final Position position = await Geolocator.getCurrentPosition();
+      final Map<String, num> locationValues = {
+        'latitude': position.latitude,
+        'longitude': position.longitude
+      };
+      return locationValues;
+    } catch (e) {
+      debugPrint(e.toString());
+      return {'latitude': 0.0, 'longitude': 0.0};
+    }
+  }
+
+  @override
+  void onInit() {
+    complaints.bindStream(Database().complaintsStream());
+    super.onInit();
+  }
+
+  List<String> departmentList = [
+    'Fine Arts',
+    'Bharat Vidya Adhyan Sankul',
+    'Commerce',
+    'Management Studies',
+    'Environmental Science',
+    'Education',
+    'Library & Education Sciences',
+    'Computer Science',
+    'Law',
+    'Botany',
+    'Food Science & Nutrition',
+    'Rajasthan Studies',
+    'Kaptan Durga Prasad Choudhary Deptt. for Journalism, Mass Communication & Multi-media technique',
+    'Microbiology',
+    'Zoology',
+    'Mathematics',
+    'Pure & Applied Chemistry',
+    'Hindi',
+    'Geography',
+    'Economics',
+    'History',
+    'Political Science',
+    'Population Studies',
+    'Geoinformatics & Remote Sensing',
+    'Vedic Vangmaya',
+    'Yogic Sciences & Human Consciousness'
+  ];
 
   dynamic getComplaintEmail() {
     return {
@@ -190,6 +240,7 @@ class ComplaintController extends GetxController {
 																	<p style="margin: 0; margin-bottom: 16px;">Email - ${emailController.text}</p>
 																	<p style="margin: 0; margin-bottom: 16px;">Department - ${selectedDepartment.value}</p>
 																	<p style="margin: 0; margin-bottom: 16px;">Complaint - ${complaintController.text}</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Location - https://www.google.com/maps/search/?api=1&query=${currentLocation['latitude']},${currentLocation['longitude']}</p>
 																	<p style="margin: 0; margin-bottom: 16px;">&nbsp;</p>
 																	<p style="margin: 0;">&nbsp;</p>
 																</div>

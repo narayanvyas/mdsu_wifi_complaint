@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:wifi_complaint/app/modules/complaint/views/complaint_success_view.dart';
-import 'package:wifi_complaint/app/modules/complaint/views/troubleshooting_view.dart';
-import 'package:wifi_complaint/app/theme/app_colors.dart';
-import 'package:wifi_complaint/app/theme/ui_helpers.dart';
+import '/app/modules/complaint/views/complaint_success_view.dart';
+import '/app/modules/complaint/views/troubleshooting_view.dart';
+import '/app/theme/app_colors.dart';
+import '/app/theme/ui_helpers.dart';
 
 import '../../../theme/form_field_styles.dart';
 import '../controllers/complaint_controller.dart';
