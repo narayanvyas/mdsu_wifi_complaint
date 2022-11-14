@@ -16,6 +16,7 @@ class ComplaintController extends GetxController {
   RxString currentComplaintId = ''.obs;
   Map<String, num> currentLocation = {'longitude': 0.0, 'latitude': 0.0};
   RxString selectedDepartment = 'Computer Science'.obs;
+  RxBool isLoading = false.obs;
 
   bool validateComplaintInput() {
     if (nameController.text.length < 2) {
@@ -34,7 +35,9 @@ class ComplaintController extends GetxController {
   void updateDropdown(String value) => selectedDepartment.value = value;
 
   Future<void> submitComplaint() async {
+    Get.focusScope!.unfocus();
     if (validateComplaintInput()) {
+      isLoading.value = true;
       currentComplaintId.value = 'MDS${randomNumeric(10)}';
       currentLocation = await getLocation();
       await Database().createComplaint(
@@ -49,6 +52,7 @@ class ComplaintController extends GetxController {
       nameController.text = '';
       emailController.text = '';
       complaintController.text = '';
+      isLoading.value = false;
     }
   }
 

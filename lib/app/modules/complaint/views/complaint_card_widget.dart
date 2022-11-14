@@ -19,40 +19,38 @@ class ComplaintCardWidget extends StatelessWidget {
             title: Row(children: [
               Text('ID - ${complaint.id ?? ''}'),
               const Spacer(),
-              IconButton(
-                  icon: const Icon(
-                    Icons.map_outlined,
-                    color: Colors.deepOrange,
-                  ),
-                  onPressed: () async {
-                    final availableMaps = await MapLauncher.installedMaps;
-
-                    await availableMaps.first.showMarker(
-                      coords: Coords(complaint.latitude ?? 0.0,
-                          complaint.longitude ?? 0.0),
-                      title: "Ocean Beach",
-                    );
-                  }),
-              if (complaint.latitude != 0 && complaint.longitude != 0)
-                horizontalSpaceTiny,
-              if (complaint.latitude != 0 && complaint.longitude != 0)
+              if (complaint.latitude != 0.0 && complaint.longitude != 0.0)
                 IconButton(
-                    icon: complaint.status != 'Resolved'
-                        ? Icon(
-                            Icons.check_rounded,
-                            color: AppColors.greenColor,
-                          )
-                        : Icon(
-                            Icons.cancel_outlined,
-                            color: AppColors.redColor,
-                          ),
+                    icon: const Icon(
+                      Icons.map_outlined,
+                      color: Colors.deepOrange,
+                    ),
                     onPressed: () async {
-                      await Database().updateComplaint(
-                          complaint,
-                          complaint.status != 'Resolved'
-                              ? 'Resolved'
-                              : 'Unresolvded');
+                      final availableMaps = await MapLauncher.installedMaps;
+
+                      await availableMaps.first.showMarker(
+                        coords: Coords(complaint.latitude ?? 0.0,
+                            complaint.longitude ?? 0.0),
+                        title: "MDSU Complaint Location",
+                      );
                     }),
+              IconButton(
+                  icon: complaint.status != 'Resolved'
+                      ? Icon(
+                          Icons.check_rounded,
+                          color: AppColors.greenColor,
+                        )
+                      : Icon(
+                          Icons.cancel_outlined,
+                          color: AppColors.redColor,
+                        ),
+                  onPressed: () async {
+                    await Database().updateComplaint(
+                        complaint,
+                        complaint.status != 'Resolved'
+                            ? 'Resolved'
+                            : 'Unresolvded');
+                  }),
             ]),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:wifi_complaint/app/theme/font_sizes.dart';
 import '/app/modules/complaint/views/complaint_success_view.dart';
 import '/app/modules/complaint/views/troubleshooting_view.dart';
 import '/app/theme/app_colors.dart';
@@ -59,7 +60,7 @@ class ComplaintView extends GetView<ComplaintController> {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: SizedBox(
-                                  width: screenWidth(context) - 110.w,
+                                  width: screenWidth(context) - 125.w,
                                   child: Text(
                                     value,
                                     style: const TextStyle(height: 1.5),
@@ -92,14 +93,26 @@ class ComplaintView extends GetView<ComplaintController> {
                             hintText: 'Eg. WiFi is not working'),
                       ),
                       verticalSpaceMedium,
-                      TextButton(
-                        onPressed: () async =>
-                            await controller.submitComplaint(),
-                        child: Text(
-                          'Submit Complaint',
-                          style: TextStyle(color: AppColors.whiteColor),
-                        ),
-                      )
+                      Obx(() => TextButton(
+                            onPressed: controller.isLoading.value
+                                ? null
+                                : () async =>
+                                    await controller.submitComplaint(),
+                            child: controller.isLoading.value
+                                ? SizedBox(
+                                    width: 20.w,
+                                    height: 20.h,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation(
+                                          AppColors.whiteColor),
+                                    ),
+                                  )
+                                : Text(
+                                    'Submit Complaint',
+                                    style:
+                                        TextStyle(color: AppColors.whiteColor),
+                                  ),
+                          ))
                     ],
                   ),
                 )),
