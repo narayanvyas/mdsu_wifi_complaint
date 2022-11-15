@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:wifi_complaint/app/theme/font_sizes.dart';
 import '/app/modules/complaint/views/complaint_success_view.dart';
 import '/app/modules/complaint/views/troubleshooting_view.dart';
 import '/app/theme/app_colors.dart';

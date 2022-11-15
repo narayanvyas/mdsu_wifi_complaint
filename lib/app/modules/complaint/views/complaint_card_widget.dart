@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:wifi_complaint/app/global.dart';
 import '/app/theme/app_colors.dart';
 import '/app/theme/ui_helpers.dart';
 import '/models/complaint_model.dart';
 import '/services/database.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 class ComplaintCardWidget extends StatelessWidget {
   final ComplaintModel complaint;
@@ -17,7 +21,10 @@ class ComplaintCardWidget extends StatelessWidget {
         Card(
           child: ListTile(
             title: Row(children: [
-              Text('ID - ${complaint.id ?? ''}'),
+              Text(
+                'ID - ${complaint.id ?? ''}',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
               const Spacer(),
               if (complaint.latitude != 0.0 && complaint.longitude != 0.0)
                 IconButton(
@@ -50,6 +57,11 @@ class ComplaintCardWidget extends StatelessWidget {
                         complaint.status != 'Resolved'
                             ? 'Resolved'
                             : 'Unresolvded');
+                    await showSnackbar(
+                        'Complaint Marked As ${complaint.status != 'Resolved' ? 'Resolved' : 'Unresolvded'}',
+                        complaint.status != 'Resolved'
+                            ? Status.success
+                            : Status.failed);
                   }),
             ]),
             subtitle: Column(
@@ -77,6 +89,26 @@ class ComplaintCardWidget extends StatelessWidget {
                       color: AppColors.blackColor,
                       height: 1.4,
                       fontSize: 16.sp),
+                ),
+                verticalSpaceSmall,
+                const Divider(),
+                verticalSpaceSmall,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.date_range_outlined,
+                      color: AppColors.greenColor,
+                    ),
+                    horizontalSpaceSmall,
+                    Text(
+                      DateFormat('dd-MM-yyyy, hh:mm a')
+                          .format((complaint.createdAt as Timestamp).toDate()),
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          height: 1.4,
+                          color: AppColors.blackColor),
+                    )
+                  ],
                 ),
                 verticalSpaceSmall,
               ],
