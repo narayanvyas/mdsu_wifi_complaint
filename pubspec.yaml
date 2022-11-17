@@ -1,7 +1,7 @@
 name: wifi_complaint
 version: 1.0.0+1
 publish_to: none
-description: A new Flutter project.
+description: WiFi Complaint Mobile App.
 environment: 
   sdk: '>=2.18.4 <3.0.0'
 
@@ -16,15 +16,16 @@ dependencies:
   firebase_auth: 4.1.2
   geolocator: 9.0.2
   map_launcher: 2.4.0
+  rflutter_alerts: 2.0.1
   flutter: 
     sdk: flutter
 
-dev_dependencies:
-  flutter_launcher_icons: "^0.10.0"
+dev_dependencies: 
+  flutter_launcher_icons: ^0.11.0
   flutter_lints: 2.0.1
   flutter_test: 
     sdk: flutter
-  
+
 flutter_icons: 
   android: launcher_icon
   image_path: assets/images/ic_launcher.png

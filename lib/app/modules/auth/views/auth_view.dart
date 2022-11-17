@@ -14,12 +14,17 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Admin Login')),
+      appBar: AppBar(title: const Text('Login')),
       body: Center(
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
           children: [
+            Image.asset(
+              'assets/images/login.png',
+              height: 150.h,
+            ),
+            verticalSpaceLarge,
             TextField(
               controller: controller.loginEmailController,
               style:

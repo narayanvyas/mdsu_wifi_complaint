@@ -9,6 +9,11 @@ class ComplaintModel {
   String? status;
   double? latitude;
   double? longitude;
+  String? remarks;
+  String? type;
+  String? resolvedByUserId;
+  String? resolvedByUserName;
+  dynamic resolvedAt;
   dynamic createdAt;
 
   ComplaintModel({
@@ -22,6 +27,11 @@ class ComplaintModel {
     this.status,
     this.latitude,
     this.longitude,
+    this.remarks,
+    this.type,
+    this.resolvedByUserId,
+    this.resolvedByUserName,
+    this.resolvedAt,
     this.createdAt,
   });
 
@@ -37,6 +47,11 @@ class ComplaintModel {
         status: complaint['status'],
         latitude: complaint['latitude'] ?? 0.0,
         longitude: complaint['longitude'] ?? 0.0,
+        remarks: complaint['remarks'],
+        type: complaint['type'],
+        resolvedByUserId: complaint['resolvedByUserId'],
+        resolvedByUserName: complaint['resolvedByUserName'],
+        resolvedAt: complaint['resolvedAt'],
         createdAt: complaint['createdAt'],
       );
 
@@ -52,6 +67,11 @@ class ComplaintModel {
     data['latitude'] = latitude;
     data['longitude'] = longitude;
     data['status'] = status;
+    data['type'] = type;
+    data['remarks'] = remarks;
+    data['resolvedByUserId'] = resolvedByUserId;
+    data['resolvedByUserName'] = resolvedByUserName;
+    data['resolvedAt'] = resolvedAt;
     data['createdAt'] = createdAt;
     return data;
   }

@@ -1,7 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:random_string/random_string.dart';
+import 'package:rflutter_alerts/rflutter_alerts.dart';
+import 'package:wifi_complaint/app/controllers/global_controller.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/form_field_styles.dart';
+import '../../../theme/text_styles.dart';
+import '../../../theme/ui_helpers.dart';
+import '../../../utils/app_texts.dart';
 import '/app/global.dart';
 import '/services/database.dart';
 
@@ -12,11 +21,18 @@ class ComplaintController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController complaintController = TextEditingController();
+  final TextEditingController remarksController = TextEditingController();
   RxInt currentTroubleshootingIndex = 0.obs;
   RxString currentComplaintId = ''.obs;
+  RxString selectedComplaintResolution = 'WiFi Error'.obs;
   Map<String, num> currentLocation = {'longitude': 0.0, 'latitude': 0.0};
   RxString selectedDepartment = 'Computer Science'.obs;
   RxBool isLoading = false.obs;
+  final List<String> complaintSolutionsList = [
+    'WiFi Error',
+    'Router Error',
+    'Network Error'
+  ];
 
   bool validateComplaintInput() {
     if (nameController.text.length < 2) {
@@ -96,6 +112,115 @@ class ComplaintController extends GetxController {
   void onInit() {
     complaints.bindStream(Database().complaintsStream());
     super.onInit();
+  }
+
+  showResolveComplaintDialog(
+      ComplaintModel complaint, BuildContext context) async {
+    remarksController.text = '';
+    Alert(
+      context: context,
+      title: 'Resolve Complaint',
+      desc: 'Mark the complaint as resolved',
+      style: AlertStyle(
+          titleStyle: headlineTwoDarkStyle,
+          descStyle: darkBodyStyle.copyWith(height: 1.5)),
+      content: Column(
+        children: [
+          verticalSpaceMedium,
+          SizedBox(
+            width: screenWidth(context) - 180.w,
+            child: DropdownButtonFormField<String>(
+              decoration: customTextFormFieldDecoration.copyWith(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.blackColor!),
+                ),
+                labelText: 'Complaint Type',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.blackColor!),
+                ),
+              ),
+              value: selectedComplaintResolution.value,
+              onChanged: (String? value) {
+                selectedComplaintResolution.value = value ?? '';
+              },
+              dropdownColor: AppColors.whiteColor,
+              items: complaintSolutionsList.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(height: 1.5),
+                    overflow: TextOverflow.clip,
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          verticalSpaceMedium,
+          Theme(
+            data: Get.theme.copyWith(
+              textTheme: TextTheme(
+                subtitle1: TextStyle(color: AppColors.primaryColor),
+              ),
+              inputDecorationTheme: outlineInputTextFormFieldStyleTwo.copyWith(
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(width: 1, color: AppColors.primaryColor!),
+                    borderRadius: BorderRadius.circular(4)),
+              ),
+            ),
+            child: TextFormField(
+              controller: remarksController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Remarks',
+                hintText: 'Complaint Remarks',
+              ),
+            ).paddingSymmetric(horizontal: 10),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          color: Colors.transparent,
+          border: Border.all(width: 1, color: AppColors.primaryColor!),
+          radius: BorderRadius.circular(2),
+          onPressed: () => Get.back(),
+          width: 120,
+          child: DialogButtonText(
+            "Cancel",
+          ),
+        ),
+        DialogButton(
+          color: AppColors.primaryColor,
+          border: Border.all(width: 1, color: Colors.transparent),
+          radius: BorderRadius.circular(2),
+          onPressed: () async {
+            if (remarksController.text.length < 2) {
+              await showSnackbar(
+                  'Please Enter Valid Complaint Remarks', Status.failed);
+            } else {
+              complaint.type = selectedComplaintResolution.value;
+              complaint.remarks = remarksController.text;
+              complaint.resolvedByUserId =
+                  Get.find<GlobalController>().user.value.id ?? '';
+              complaint.resolvedByUserName =
+                  Get.find<GlobalController>().user.value.name ?? '';
+              complaint.status = 'Resolved';
+              complaint.resolvedAt = FieldValue.serverTimestamp();
+              await Database().updateComplaint(complaint);
+              Get.back();
+              showSnackbar('Complaint Resolved Successfully', Status.success);
+            }
+          },
+          width: 120,
+          child: Text(
+            "Update",
+            style: lightButtonTextStyle.copyWith(color: AppColors.whiteColor),
+          ),
+        )
+      ],
+    ).show();
   }
 
   List<String> departmentList = [

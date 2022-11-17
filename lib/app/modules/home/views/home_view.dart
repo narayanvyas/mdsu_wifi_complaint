@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import '/app/modules/network_engineer/views/network_engineer_view.dart';
 import '/app/controllers/global_controller.dart';
 import '/app/modules/auth/controllers/auth_controller.dart';
 import '/app/modules/complaint/controllers/complaint_controller.dart';
@@ -27,6 +28,46 @@ class HomeView extends GetView<HomeController> {
             padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 30.w),
             shrinkWrap: true,
             children: [
+              Obx(() => Get.find<GlobalController>().user.value.role == 'admin'
+                  ? Card(
+                      child: ListTile(
+                        onTap: () {
+                          Get.to(const NetworkEngineerView());
+                        },
+                        title: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/network_engineer.png',
+                              height: 150.h,
+                            ),
+                            verticalSpaceMedium,
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.person_outline,
+                                  color: AppColors.redColor,
+                                ),
+                                horizontalSpaceSmall,
+                                const Text(
+                                  'Manage Network Engineers',
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                                const Spacer(),
+                                Icon(
+                                  Icons.arrow_right_alt_outlined,
+                                  color: AppColors.redColor,
+                                ),
+                              ],
+                            ),
+                            verticalSpaceSmall,
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container()),
+              Obx(() => Get.find<GlobalController>().user.value.role == 'admin'
+                  ? verticalSpaceMedium
+                  : Container()),
               Obx(() => Get.find<GlobalController>().user.value.id != null
                   ? Card(
                       child: ListTile(
@@ -43,7 +84,7 @@ class HomeView extends GetView<HomeController> {
                             Row(
                               children: [
                                 Icon(
-                                  Icons.person_outline,
+                                  Icons.help_outline,
                                   color: AppColors.redColor,
                                 ),
                                 horizontalSpaceSmall,
@@ -156,7 +197,7 @@ class HomeView extends GetView<HomeController> {
                             Get.toNamed(Routes.AUTH);
                           },
                           child: Text(
-                            'Admin Login',
+                            'Login',
                             style: TextStyle(color: AppColors.whiteColor),
                           ))
                       : TextButton(

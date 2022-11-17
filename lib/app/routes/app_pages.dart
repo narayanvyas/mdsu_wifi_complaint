@@ -6,6 +6,8 @@ import '../modules/complaint/bindings/complaint_binding.dart';
 import '../modules/complaint/views/complaint_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/network_engineer/bindings/network_engineer_binding.dart';
+import '../modules/network_engineer/views/network_engineer_view.dart';
 
 part 'app_routes.dart';
 
@@ -32,6 +34,11 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => const AuthView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.NETWORK_ENGINEER,
+      page: () => const NetworkEngineerView(),
+      binding: NetworkEngineerBinding(),
     ),
   ];
 }

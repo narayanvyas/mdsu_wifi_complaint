@@ -9,6 +9,7 @@ abstract class Routes {
   static const COMPLAINT = _Paths.COMPLAINT;
   static const TROUBLESHOOTING = _Paths.TROUBLESHOOTING;
   static const AUTH = _Paths.AUTH;
+  static const NETWORK_ENGINEER = _Paths.NETWORK_ENGINEER;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const COMPLAINT = '/complaint';
   static const TROUBLESHOOTING = '/troubleshooting';
   static const AUTH = '/auth';
+  static const NETWORK_ENGINEER = '/network-engineer';
 }

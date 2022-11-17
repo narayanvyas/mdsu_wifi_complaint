@@ -21,7 +21,7 @@ class TroubleshootingView extends GetView<ComplaintController> {
                     : 'assets/images/restart_phone.png'),
                 Text(
                   controller.currentTroubleshootingIndex.value == 0
-                      ? 'Try to reset your WiFi Settings'
+                      ? 'Try to reset your WiFi Settings of your device'
                       : 'Try Restarting Your Device',
                   textAlign: TextAlign.center,
                   style: TextStyle(
